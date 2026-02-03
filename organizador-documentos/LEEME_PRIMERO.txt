@@ -1,0 +1,90 @@
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║     ORGANIZADOR DE DOCUMENTOS PARA WINDOWS                       ║
+║     Para: rayas                                                  ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+
+
+📋 INSTRUCCIONES RÁPIDAS
+═══════════════════════════════════════════════════════════════════
+
+🎯 Opción 1: LA MÁS FÁCIL (Recomendada)
+───────────────────────────────────────────────────────────────────
+
+1. Haz doble clic en: organizar_documentos.bat
+
+2. Acepta los permisos si Windows te pregunta
+
+3. ¡Listo! Ya tienes tus carpetas organizadas
+
+
+⚡ Opción 2: PowerShell (Más completo)
+───────────────────────────────────────────────────────────────────
+
+1. Abre PowerShell (busca "PowerShell" en el menú inicio)
+
+2. Escribe o copia este comando:
+   cd C:\Users\rayas\Downloads
+
+3. Luego ejecuta:
+   .\organizar_documentos.ps1
+
+4. Si da error, primero ejecuta esto:
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+   (Escribe S y presiona Enter)
+
+5. Vuelve a intentar el paso 3
+
+
+📂 ¿QUÉ SE VA A CREAR?
+═══════════════════════════════════════════════════════════════════
+
+Se crearán estas carpetas en: C:\Users\rayas\Documents
+
+✓ Personal       → DNI, CV, fotos, certificados
+✓ Trabajo        → Contratos, nóminas, reportes
+✓ Proyectos      → Tus proyectos activos y completados
+✓ Finanzas       → Facturas, recibos, impuestos
+✓ Educacion      → Cursos, certificaciones, libros
+✓ Salud          → Historiales médicos, recetas
+✓ Legal          → Contratos, escrituras
+✓ Referencias    → Manuales, guías, tutoriales
+✓ Archivos       → Documentos antiguos por año
+✓ Temporal       → Para organizar después
+
+
+🔒 SEGURIDAD
+═══════════════════════════════════════════════════════════════════
+
+✓ NO borra ningún archivo existente
+✓ Solo crea carpetas nuevas
+✓ Puedes ejecutarlo varias veces sin problemas
+✓ Totalmente seguro
+
+
+💡 DESPUÉS DE EJECUTAR
+═══════════════════════════════════════════════════════════════════
+
+1. Abre tu carpeta Documentos
+   → Presiona Windows + E
+   → Haz clic en "Documentos" en el panel izquierdo
+
+2. Lee el archivo: ORGANIZACION_README.txt
+   → Contiene consejos de uso y mantenimiento
+
+3. Empieza a organizar:
+   → Descarga → Temporal → Clasifica semanalmente
+
+
+📖 MÁS INFORMACIÓN
+═══════════════════════════════════════════════════════════════════
+
+Para instrucciones detalladas, lee:
+→ INSTRUCCIONES.md
+
+
+═══════════════════════════════════════════════════════════════════
+Fecha: 2026-02-03
+Sistema: Windows 10/11
+═══════════════════════════════════════════════════════════════════
