@@ -1,0 +1,60 @@
+[Unit]
+Description=Cloudbot AI Agent - 24/7 Telegram Bot
+Documentation=https://github.com/your-repo/cloudbot-deploy
+After=network-online.target docker.service
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+Type=simple
+User=moldbot
+Group=moldbot
+WorkingDirectory=/home/moldbot/cloudbot
+
+# Environment
+Environment=COMPOSE_PROJECT_NAME=cloudbot
+
+# Start command
+ExecStartPre=/usr/bin/docker compose pull --quiet
+ExecStart=/usr/bin/docker compose up --remove-orphans
+ExecStop=/usr/bin/docker compose down --timeout 30
+
+# Restart policy
+Restart=always
+RestartSec=10
+StartLimitInterval=200
+StartLimitBurst=5
+
+# Resource limits
+MemoryMax=2G
+MemoryHigh=1.5G
+CPUQuota=150%
+
+# Timeout settings
+TimeoutStartSec=120
+TimeoutStopSec=60
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=cloudbot
+
+# Security hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+PrivateTmp=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+
+# Allow read-write access to working directory
+ReadWritePaths=/home/moldbot/cloudbot
+
+# Allow Docker socket access
+ReadWritePaths=/var/run/docker.sock
+
+[Install]
+WantedBy=multi-user.target

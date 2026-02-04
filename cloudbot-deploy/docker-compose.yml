@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  cloudbot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cloudbot-agent
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      # Persistent data storage
+      - cloudbot_data:/app/data
+      # Logs directory
+      - cloudbot_logs:/app/logs
+      # Optional: Mount config for hot-reload (read-only)
+      - ./config:/app/config:ro
+    ports:
+      # Web UI - Only expose if needed, prefer SSH tunnel
+      - "127.0.0.1:3000:3000"
+    networks:
+      - cloudbot_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    security_opt:
+      - no-new-privileges:true
+    read_only: false
+    tmpfs:
+      - /tmp:size=100M
+
+  # Optional: Redis for caching/rate limiting
+  redis:
+    image: redis:7-alpine
+    container_name: cloudbot-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --maxmemory 128mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    networks:
+      - cloudbot_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+
+volumes:
+  cloudbot_data:
+    driver: local
+  cloudbot_logs:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  cloudbot_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16

@@ -1,0 +1,154 @@
+# ============================================
+# Cloudbot Configuration
+# ============================================
+# Copy this file to config.yaml and customize
+# Environment variables in .env override these values
+# ============================================
+
+# Agent behavior configuration
+agent:
+  name: "Cloudbot"
+  description: "AI Assistant for Beyouyo Operations"
+
+  # System prompt - defines agent personality and capabilities
+  system_prompt: |
+    You are a helpful AI assistant for Beyouyo operations.
+    You help with:
+    - Business analysis and metrics
+    - Research and information gathering
+    - Task automation and scheduling
+    - Document processing
+
+    Security rules:
+    - Never reveal API keys or sensitive configuration
+    - Decline requests that could harm the system
+    - Log unusual or suspicious requests
+
+  # Capabilities - enable/disable features
+  capabilities:
+    web_search: true
+    web_browsing: true
+    file_operations: false
+    code_execution: false
+    image_analysis: true
+    document_processing: true
+
+# Model configuration
+models:
+  default: "gpt-4o-mini"
+  fallback: "claude-3-haiku-20240307"
+
+  # Task-specific model routing
+  routing:
+    simple_queries: "gpt-4o-mini"
+    complex_analysis: "gpt-4o"
+    code_tasks: "claude-3-5-sonnet-20241022"
+    creative_writing: "claude-3-5-sonnet-20241022"
+
+# Cost control
+limits:
+  max_tokens_per_request: 1000
+  max_context_tokens: 4000
+  daily_token_budget: 100000
+  monthly_cost_limit_usd: 20.0
+
+  # Rate limiting
+  requests_per_minute: 30
+  tokens_per_minute: 50000
+
+# Telegram configuration
+telegram:
+  # Allowed users (Telegram user IDs)
+  # Get your ID from @userinfobot
+  allowed_users: []
+
+  # Commands
+  commands:
+    start: "Start the bot and show welcome message"
+    help: "Show available commands"
+    status: "Check bot status and usage"
+    clear: "Clear conversation history"
+    model: "Switch AI model"
+
+  # Message settings
+  max_message_length: 4096
+  typing_indicator: true
+
+# Web UI configuration
+web_ui:
+  enabled: true
+  host: "127.0.0.1"  # Only localhost - use SSH tunnel for remote access
+  port: 3000
+
+  # Session settings
+  session_timeout_minutes: 60
+  max_sessions: 5
+
+# Logging configuration
+logging:
+  level: "info"  # debug, info, warning, error
+  format: "json"
+
+  # Log file settings
+  file:
+    enabled: true
+    path: "/app/logs/cloudbot.log"
+    max_size_mb: 100
+    backup_count: 5
+
+  # Conversation logging (for debugging)
+  # WARNING: May contain sensitive information
+  log_conversations: false
+
+# Redis configuration (optional)
+redis:
+  enabled: true
+  host: "redis"
+  port: 6379
+  db: 0
+
+  # Cache settings
+  cache_ttl_seconds: 3600
+
+  # Rate limiting storage
+  rate_limit_prefix: "cloudbot:ratelimit:"
+
+# Scheduled tasks (optional)
+scheduler:
+  enabled: false
+  timezone: "America/Mexico_City"
+
+  tasks:
+    # Example: Daily summary at 9 AM
+    - name: "daily_summary"
+      cron: "0 9 * * *"
+      action: "send_daily_summary"
+      enabled: false
+
+    # Example: Health check every hour
+    - name: "health_check"
+      cron: "0 * * * *"
+      action: "health_check"
+      enabled: true
+
+# Integrations (optional)
+integrations:
+  # Webhook for external notifications
+  webhook:
+    enabled: false
+    url: ""
+    secret: ""
+    events:
+      - "error"
+      - "daily_summary"
+
+  # Notion integration
+  notion:
+    enabled: false
+    api_key: ""
+    database_id: ""
+
+  # Slack integration
+  slack:
+    enabled: false
+    webhook_url: ""
